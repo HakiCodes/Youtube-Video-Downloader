@@ -1,14 +1,13 @@
-from pytube import YouTube 
+from pytube import YouTube
 
 def Download(link):
     youtubeObject = YouTube(link)
-    youtubeObject = youtubeObject.streams.get_highest_resolution()
+    youtubeStream = youtubeObject.streams.filter(progressive=True, file_extension='mp4').order_by('resolution').desc().first()
     try:
-        youtubeObject.download()
+        youtubeStream.download()
     except:
         print("An error has occurred!!!!!!!!!!!!!")
-        print("download complete")
+    print("download complete")
         
 link = input("Enter URL here: ")
-
 Download(link)
